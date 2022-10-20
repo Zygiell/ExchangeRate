@@ -3,11 +3,6 @@ using ExchangeRateAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExchangeRateAPI.Controllers
 {
@@ -31,7 +26,6 @@ namespace ExchangeRateAPI.Controllers
             return await _apiKeyService.GenerateApiKeyAsync();
         }
 
-
         [HttpGet]
         [SwaggerOperation(Summary = "Compares and returns the exchange rates of the two given currencies: Key - Value from the given time range startDate - endDate (yyyy-MM-dd)")]
         [Authorize]
@@ -39,7 +33,7 @@ namespace ExchangeRateAPI.Controllers
             [FromQuery] DateTime startDate,
             [FromQuery] DateTime endDate)
         {
-            //KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>(dto.FirstCurrency, dto.SecCurrency);            
+            //KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>(dto.FirstCurrency, dto.SecCurrency);
 
             return await _exchangeRateService.GetExchangeRate(currencyCodes, startDate, endDate);
         }

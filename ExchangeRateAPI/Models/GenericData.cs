@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExchangeRateAPI.Models
+﻿namespace ExchangeRateAPI.Models
 {
-
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -14,7 +7,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message", IsNullable = false)]
     public partial class GenericData
     {
-
         private GenericDataHeader headerField;
 
         private GenericDataDataSet dataSetField;
@@ -52,7 +44,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message")]
     public partial class GenericDataHeader
     {
-
         private string idField;
 
         private bool testField;
@@ -135,7 +126,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message")]
     public partial class GenericDataHeaderSender
     {
-
         private string idField;
 
         /// <remarks/>
@@ -159,7 +149,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message")]
     public partial class GenericDataHeaderStructure
     {
-
         private Structure structureField;
 
         private string structureIDField;
@@ -216,7 +205,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common", IsNullable = false)]
     public partial class Structure
     {
-
         private string uRNField;
 
         /// <remarks/>
@@ -240,7 +228,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message")]
     public partial class GenericDataDataSet
     {
-
         private Series seriesField;
 
         private string actionField;
@@ -313,7 +300,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic", IsNullable = false)]
     public partial class Series
     {
-
         private SeriesValue[] seriesKeyField;
 
         private SeriesObs[] obsField;
@@ -353,7 +339,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic")]
     public partial class SeriesValue
     {
-
         private string idField;
 
         private string valueField;
@@ -393,7 +378,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic")]
     public partial class SeriesObs
     {
-
         private SeriesObsObsDimension obsDimensionField;
 
         private SeriesObsObsValue obsValueField;
@@ -431,7 +415,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic")]
     public partial class SeriesObsObsDimension
     {
-
         private System.DateTime valueField;
 
         /// <remarks/>
@@ -455,7 +438,6 @@ namespace ExchangeRateAPI.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic")]
     public partial class SeriesObsObsValue
     {
-
         private decimal valueField;
 
         /// <remarks/>
@@ -472,6 +454,4 @@ namespace ExchangeRateAPI.Models
             }
         }
     }
-
-
 }

@@ -2,11 +2,6 @@
 using ExchangeRateAPI.Services;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExchangeRateIntegrationTests
 {
@@ -48,6 +43,7 @@ namespace ExchangeRateIntegrationTests
 
             Assert.NotEmpty(result);
         }
+
         public static IEnumerable<object[]> GetExchangeRatesInvalidParams()
         {
             yield return new object[] { new KeyValuePair<string, string>("USD", "EUR"), new DateTime(2021, 1, 10), new DateTime(2005, 1, 20) };

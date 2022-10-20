@@ -1,3 +1,4 @@
+using ExchangeRateAPI;
 using ExchangeRateAPI.Auth;
 using ExchangeRateAPI.Entities;
 using ExchangeRateAPI.Middlewares;
@@ -10,7 +11,6 @@ using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // NLog: Setup NLog for Dependency injection
 
@@ -51,8 +51,8 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IExchangeRateService, ExchangeRateService>();
 builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
+builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -85,6 +85,10 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("ExchangeRateDbCo
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+await seeder.Seed();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -103,4 +107,5 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{ }

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace ExchangeRatePerformanceTests
 {
     public class Tester
     {
+        // ExchangeRateAPI has to be running. Provide valid _baseUrl and _apiKey, than turn on project
         private const string _baseUrl = "https://localhost:7287";
+
         private const string _apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIwMiIsImV4cCI6MTY2NzU1MDQzOCwiaXNzIjoiaHR0cDovL2N1cnJlbmN5ZXhjaGFuZ2UuY29tIiwiYXVkIjoiaHR0cDovL2N1cnJlbmN5ZXhjaGFuZ2UuY29tIn0.a97tDfgCZ7invbhUhjn31yGIfrB0kizI65-rt7zvo7Q";
 
         public async Task Run()
@@ -48,7 +45,6 @@ namespace ExchangeRatePerformanceTests
                     await Task.WhenAll(tasks);
                     Console.WriteLine($"Completed Iteration: {step}");
 
-
                     await Task.Delay(DELAY);
                 }
             }
@@ -86,6 +82,5 @@ namespace ExchangeRatePerformanceTests
 
             return new KeyValuePair<DateTime, DateTime>(startDate, endDate);
         }
-
     }
 }
