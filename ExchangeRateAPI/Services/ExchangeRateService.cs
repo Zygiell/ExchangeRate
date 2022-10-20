@@ -36,7 +36,8 @@ namespace ExchangeRateAPI.Services
             _logger.LogWarning($"GetExchangeRate invoked for {currencyCodes.Key}:{currencyCodes.Value}" +
                 $"from {startDate} to {endDate}");
             if (startDate > DateTime.Now ||
-                endDate > DateTime.Now)
+                endDate > DateTime.Now ||
+                endDate<startDate)
             {
                 throw new NotFoundException();
             }
@@ -73,12 +74,9 @@ namespace ExchangeRateAPI.Services
         private async Task<IEnumerable<Cache>> GetFromDb(KeyValuePair<string, string> currencyCodes,
             DateTime startDate, DateTime endDate)
         {
-            var exchangeRatesList = await _dbContext.Caches
-                .AsNoTracking()
+            return await _dbContext.Caches
                 .Where(x => x.FirstCurrency == currencyCodes.Key && x.SecondCurrency == currencyCodes.Value &&
-                x.Date >= startDate && x.Date <= endDate)
-                .ToListAsync();
-            return exchangeRatesList;
+                x.Date >= startDate && x.Date <= endDate).ToListAsync();
         }
 
         private async Task<IEnumerable<ExchangeRateViewModel>> GetExternalResponse(KeyValuePair<string, string> currencyCodes,
@@ -96,6 +94,10 @@ namespace ExchangeRateAPI.Services
                 $"&endPeriod={endDateString}" +
                 $"&detail=dataonly");
             var content = await result.Content.ReadAsStringAsync();
+            if(content.Equals("No results found."))
+            {
+                throw new NotFoundException();
+            }
 
             if (string.IsNullOrEmpty(content))
             {
@@ -117,7 +119,7 @@ namespace ExchangeRateAPI.Services
                 ExchangeRateValue = x.ObsValue.value
             }).ToList();
 
-            if (!cache.Any(x => x.Date == startDate))
+            if (!cache.Any(x=>x.Date == startDate))
             {
                 _logger.LogWarning($"No exchange rates found for {startDate}");
                 cache.Add(await GetClosestAvaiablePreviousDayFromStartDate(currencyCodes, startDate));
