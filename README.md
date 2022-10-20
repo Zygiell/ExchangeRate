@@ -1,5 +1,17 @@
-# ExchangeRate
+# ExchangeRateAPI
 Currencies Exchange Rate Viewer API.
+Its a simple API that has two endpoints:
+1. Download exchange rates from a date range. (requires authorization)
+2. Generate ApiKey for authorization.
+
+ExchangeRateAPI downloads data from Eurpean Central Bank Statistical Data and Metadata eXchange external API:
+https://sdw-wsrest.ecb.europa.eu/help/
+
+# Optimalization
+Each time the application retrieves data from an external API, the data is saved to the database as "cache", 
+so that when the same query is requested in the future, there is no need to query the external api.
+Additionally, at first app startup, application seeds database with most common currency pairs for 10 years back.
+
 
 # How to launch on local machine:
  PRE REQUISITES : .NET 6 FRAMEWORK + IDE (tested on Visual Studio)
