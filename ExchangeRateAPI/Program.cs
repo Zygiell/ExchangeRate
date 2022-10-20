@@ -12,7 +12,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // NLog: Setup NLog for Dependency injection
 
 builder.Logging.ClearProviders();
@@ -54,7 +53,6 @@ builder.Services.AddScoped<IExchangeRateService, ExchangeRateService>();
 builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
 builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -109,4 +107,5 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{ }

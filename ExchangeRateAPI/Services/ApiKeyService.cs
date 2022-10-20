@@ -2,14 +2,9 @@
 using ExchangeRateAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ExchangeRateAPI.Services
 {
@@ -26,6 +21,7 @@ namespace ExchangeRateAPI.Services
             _authenticationSettings = authenticationSettings;
             _logger = logger;
         }
+
         public async Task<string> GenerateApiKeyAsync()
         {
             _logger.LogWarning("Generating new Api Key.");
@@ -46,7 +42,6 @@ namespace ExchangeRateAPI.Services
             await _dbContext.ApiKeys.AddAsync(apiKeyEntity);
 
             await _dbContext.SaveChangesAsync();
-
 
             var subject = _dbContext.ApiKeys.FirstOrDefaultAsync(x => x.Id == apiKeyEntity.Id);
             var claims = new List<Claim>()

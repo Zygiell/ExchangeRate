@@ -1,13 +1,5 @@
 ﻿using ExchangeRateAPI.Entities;
-using ExchangeRateAPI.Models;
 using ExchangeRateAPI.Services;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExchangeRateAPI
 {
@@ -28,7 +20,7 @@ namespace ExchangeRateAPI
         {
             if (await _dbContext.Database.CanConnectAsync())
             {
-                if ( !_dbContext.Caches.Any())
+                if (!_dbContext.Caches.Any())
                 {
                     await GetUsdToEur();
                     await GetGbpToEur();
@@ -36,6 +28,7 @@ namespace ExchangeRateAPI
                 }
             }
         }
+
         private async Task GetUsdToEur()
         {
             KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>("USD", "EUR");
@@ -43,6 +36,7 @@ namespace ExchangeRateAPI
             var endDate = DateTime.Now;
             await _exchangeRateService.GetExchangeRate(currencyCodes, startDate, endDate);
         }
+
         private async Task GetGbpToEur()
         {
             KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>("GBP", "EUR");
@@ -50,6 +44,7 @@ namespace ExchangeRateAPI
             var endDate = DateTime.Now;
             await _exchangeRateService.GetExchangeRate(currencyCodes, startDate, endDate);
         }
+
         private async Task GetPlnToEur()
         {
             KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>("PLN", "EUR");

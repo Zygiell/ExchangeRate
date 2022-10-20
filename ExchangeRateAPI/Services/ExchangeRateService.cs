@@ -3,12 +3,6 @@ using ExchangeRateAPI.Entities;
 using ExchangeRateAPI.Exceptions;
 using ExchangeRateAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace ExchangeRateAPI.Services
@@ -29,7 +23,6 @@ namespace ExchangeRateAPI.Services
             _logger = logger;
         }
 
-
         public async Task<IEnumerable<ExchangeRateViewModel>> GetExchangeRate(KeyValuePair<string, string> currencyCodes,
             DateTime startDate, DateTime endDate)
         {
@@ -37,7 +30,7 @@ namespace ExchangeRateAPI.Services
                 $"from {startDate} to {endDate}");
             if (startDate > DateTime.Now ||
                 endDate > DateTime.Now ||
-                endDate<startDate)
+                endDate < startDate)
             {
                 throw new NotFoundException();
             }
@@ -72,7 +65,6 @@ namespace ExchangeRateAPI.Services
             return await GetExternalResponse(currencyCodes, startDate, endDate, ratesFromDb);
         }
 
-
         /// <summary>
         /// Gets currency pair exchange rate from database
         /// </summary>
@@ -87,6 +79,7 @@ namespace ExchangeRateAPI.Services
                 .Where(x => x.FirstCurrency == currencyCodes.Key && x.SecondCurrency == currencyCodes.Value &&
                 x.Date >= startDate && x.Date <= endDate).ToListAsync();
         }
+
         /// <summary>
         /// Gets currency pair exchange rate from external api.
         /// </summary>
@@ -111,7 +104,7 @@ namespace ExchangeRateAPI.Services
                 $"&endPeriod={endDateString}" +
                 $"&detail=dataonly");
             var content = await result.Content.ReadAsStringAsync();
-            if(content.Equals("No results found."))
+            if (content.Equals("No results found."))
             {
                 throw new NotFoundException();
             }
@@ -136,7 +129,7 @@ namespace ExchangeRateAPI.Services
                 ExchangeRateValue = x.ObsValue.value
             }).ToList();
 
-            if (!cache.Any(x=>x.Date == startDate))
+            if (!cache.Any(x => x.Date == startDate))
             {
                 _logger.LogWarning($"No exchange rates found for {startDate}");
                 cache.Add(await GetClosestAvaiablePreviousDayFromStartDate(currencyCodes, startDate));
@@ -156,10 +149,9 @@ namespace ExchangeRateAPI.Services
             await _dbContext.AddRangeAsync(newCache);
             await _dbContext.SaveChangesAsync();
 
-
             return _mapper.Map<List<ExchangeRateViewModel>>(cache);
-
         }
+
         /// <summary>
         /// Gets 10 previous days from startDate, and returns closest one
         /// </summary>
@@ -192,7 +184,5 @@ namespace ExchangeRateAPI.Services
             cache = cache.OrderByDescending(x => x.Date);
             return cache.First();
         }
-
-
     }
 }
