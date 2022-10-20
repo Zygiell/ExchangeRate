@@ -23,7 +23,7 @@ namespace ExchangeRateIntegrationTests
         {
             get
             {
-                using var scope = _factory.Server.Services.CreateScope();
+                var scope = _factory.Server.Services.CreateScope();
                 var _exchangeRateService = scope.ServiceProvider.GetService<IExchangeRateService>();
 
                 return _exchangeRateService;

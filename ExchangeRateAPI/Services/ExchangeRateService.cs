@@ -74,11 +74,9 @@ namespace ExchangeRateAPI.Services
         private async Task<IEnumerable<Cache>> GetFromDb(KeyValuePair<string, string> currencyCodes,
             DateTime startDate, DateTime endDate)
         {
-            var exchangeRatesList = await _dbContext.Caches                
+            return await _dbContext.Caches
                 .Where(x => x.FirstCurrency == currencyCodes.Key && x.SecondCurrency == currencyCodes.Value &&
-                x.Date >= startDate && x.Date <= endDate)
-                .ToListAsync();
-            return exchangeRatesList;
+                x.Date >= startDate && x.Date <= endDate).ToListAsync();
         }
 
         private async Task<IEnumerable<ExchangeRateViewModel>> GetExternalResponse(KeyValuePair<string, string> currencyCodes,
