@@ -29,6 +29,7 @@ namespace ExchangeRateAPI.Services
         public async Task<string> GenerateApiKeyAsync()
         {
             _logger.LogWarning("Generating new Api Key.");
+            // Every time someone generate api key, method also check if there are any expired keys in db, and removes them
             var expiredKeys = await _dbContext.ApiKeys.Where(x => x.ExpireDate < DateTime.Now).ToListAsync();
             if (expiredKeys.Any())
             {

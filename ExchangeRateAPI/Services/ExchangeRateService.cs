@@ -42,7 +42,10 @@ namespace ExchangeRateAPI.Services
                 throw new NotFoundException();
             }
 
+            // Checks if there are any records in db
             var ratesFromDb = await GetFromDb(currencyCodes, startDate, endDate);
+
+            //Sundays counter algorithm
             var daysInterval = (int)((endDate - startDate).TotalDays);
             var dates = Enumerable.Range(0, 1 + endDate.Subtract(startDate).Days)
           .Select(offset => startDate.AddDays(offset))
@@ -70,7 +73,13 @@ namespace ExchangeRateAPI.Services
         }
 
 
-
+        /// <summary>
+        /// Gets currency pair exchange rate from database
+        /// </summary>
+        /// <param name="currencyCodes"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
         private async Task<IEnumerable<Cache>> GetFromDb(KeyValuePair<string, string> currencyCodes,
             DateTime startDate, DateTime endDate)
         {
@@ -78,7 +87,15 @@ namespace ExchangeRateAPI.Services
                 .Where(x => x.FirstCurrency == currencyCodes.Key && x.SecondCurrency == currencyCodes.Value &&
                 x.Date >= startDate && x.Date <= endDate).ToListAsync();
         }
-
+        /// <summary>
+        /// Gets currency pair exchange rate from external api.
+        /// </summary>
+        /// <param name="currencyCodes"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="resultFromDb"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException"></exception>
         private async Task<IEnumerable<ExchangeRateViewModel>> GetExternalResponse(KeyValuePair<string, string> currencyCodes,
             DateTime startDate, DateTime endDate, IEnumerable<Cache> resultFromDb)
         {
@@ -143,7 +160,12 @@ namespace ExchangeRateAPI.Services
             return _mapper.Map<List<ExchangeRateViewModel>>(cache);
 
         }
-
+        /// <summary>
+        /// Gets 10 previous days from startDate, and returns closest one
+        /// </summary>
+        /// <param name="currencyCodes"></param>
+        /// <param name="startDate"></param>
+        /// <returns></returns>
         private async Task<Cache> GetClosestAvaiablePreviousDayFromStartDate(KeyValuePair<string, string> currencyCodes,
             DateTime startDate)
         {

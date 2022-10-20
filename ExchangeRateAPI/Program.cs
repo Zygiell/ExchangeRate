@@ -1,3 +1,4 @@
+using ExchangeRateAPI;
 using ExchangeRateAPI.Auth;
 using ExchangeRateAPI.Entities;
 using ExchangeRateAPI.Middlewares;
@@ -51,6 +52,7 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IExchangeRateService, ExchangeRateService>();
 builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
+builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 
@@ -85,6 +87,10 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("ExchangeRateDbCo
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+await seeder.Seed();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
