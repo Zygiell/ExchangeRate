@@ -31,7 +31,7 @@ namespace ExchangeRateAPI
 
         private async Task GetUsdToEur()
         {
-            KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>("USD", "EUR");
+            var currencyCodes = new KeyValuePair<string, string>("USD", "EUR");
             var startDate = DateTime.Now.AddYears(-10);
             var endDate = DateTime.Now;
             await _exchangeRateService.GetExchangeRate(currencyCodes, startDate, endDate);
@@ -39,7 +39,7 @@ namespace ExchangeRateAPI
 
         private async Task GetGbpToEur()
         {
-            KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>("GBP", "EUR");
+            var currencyCodes = new KeyValuePair<string, string>("GBP", "EUR");
             var startDate = DateTime.Now.AddYears(-10);
             var endDate = DateTime.Now;
             await _exchangeRateService.GetExchangeRate(currencyCodes, startDate, endDate);
@@ -47,7 +47,7 @@ namespace ExchangeRateAPI
 
         private async Task GetPlnToEur()
         {
-            KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>("PLN", "EUR");
+            var currencyCodes = new KeyValuePair<string, string>("PLN", "EUR");
             var startDate = DateTime.Now.AddYears(-10);
             var endDate = DateTime.Now;
             await _exchangeRateService.GetExchangeRate(currencyCodes, startDate, endDate);

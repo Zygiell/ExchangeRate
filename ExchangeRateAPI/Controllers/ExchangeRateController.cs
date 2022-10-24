@@ -33,8 +33,6 @@ namespace ExchangeRateAPI.Controllers
             [FromQuery] DateTime startDate,
             [FromQuery] DateTime endDate)
         {
-            //KeyValuePair<string, string> currencyCodes = new KeyValuePair<string, string>(dto.FirstCurrency, dto.SecCurrency);
-
             return await _exchangeRateService.GetExchangeRate(currencyCodes, startDate, endDate);
         }
     }
